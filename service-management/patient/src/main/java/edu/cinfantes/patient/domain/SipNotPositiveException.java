@@ -1,4 +1,4 @@
-package com.grupoasv.patient.domain;
+package edu.cinfantes.patient.domain;
 
 final class SipNotPositiveException extends RuntimeException {
 }

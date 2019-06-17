@@ -1,4 +1,4 @@
-package com.grupoasv.patient.domain;
+package edu.cinfantes.patient.domain;
 
 import lombok.Getter;
 

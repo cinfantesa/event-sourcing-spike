@@ -1,5 +1,7 @@
-package com.grupoasv.patient.domain;
+package edu.cinfantes.patient.domain;
+
+import java.util.List;
 
 public interface PatientRepository {
-  void save(Patient patient);
+  void saveAll(List<DomainEvent> event);
 }

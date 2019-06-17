@@ -1,16 +1,17 @@
-package com.grupoasv.patient.domain;
-
-import lombok.Getter;
+package edu.cinfantes.patient.domain;
 
 import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
-@Getter
 public final class PatientId {
   private UUID id;
 
   public PatientId() {
     id = randomUUID();
+  }
+
+  public UUID value() {
+    return id;
   }
 }
