@@ -4,3 +4,7 @@ spring:
       database: patient
       host: localhost
       port: 27017
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: true
