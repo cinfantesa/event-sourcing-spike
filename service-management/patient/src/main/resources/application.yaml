@@ -1,1 +1,6 @@
-
+spring:
+  data:
+    mongodb:
+      database: patient
+      host: localhost
+      port: 27017
