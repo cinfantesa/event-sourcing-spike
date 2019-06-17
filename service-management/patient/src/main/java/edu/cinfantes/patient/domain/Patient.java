@@ -12,6 +12,7 @@ public final class Patient {
   private PatientSip sip;
   private PatientPersonalInfo personalInfo;
   private PatientComment comment;
+  private List<PatientAddress> addresses;
 
   private List<DomainEvent> events;
 
@@ -20,7 +21,7 @@ public final class Patient {
     this.sip = sip;
     this.personalInfo = personalInfo;
     this.comment = comment;
-
+    addresses = new ArrayList<>();
     events = new ArrayList<>();
 
     events.add(new PatientCreatedDomainEvent(id.toString(), Map.of(

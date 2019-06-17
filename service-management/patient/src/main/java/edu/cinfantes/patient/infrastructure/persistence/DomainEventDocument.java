@@ -11,7 +11,7 @@ import java.util.Map;
 @Data
 @Builder
 @Document(collection = "PatientEvents")
-public class PatientDomainEventDocument{
+public class DomainEventDocument {
   @Id
   private String id;
   private DateTime when;
