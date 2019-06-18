@@ -6,5 +6,5 @@ import java.util.stream.Stream;
 public interface EventBus {
   void appendToEventStream(List<DomainEvent> domainEvents);
 
-  Stream<DomainEvent> loadEventStream(String value);
+  Stream<DomainEvent> loadEventStream(String aggregateId);
 }

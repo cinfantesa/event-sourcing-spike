@@ -36,6 +36,9 @@ public final class Patient {
   }
 
   public Patient(Stream<DomainEvent> eventStream) {
+    addresses = new ArrayList<>();
+    events = new ArrayList<>();
+
     eventStream.forEach((event) -> {
       if (event instanceof PatientCreatedDomainEvent) {
 
@@ -45,7 +48,7 @@ public final class Patient {
 
   private void apply(PatientCreatedDomainEvent event) {
     id = new PatientId(event.getAggregateId());
-
+    sip = new PatientSip((Integer) event.getData().get("sip"));
   }
 
   public List<DomainEvent> pullDomainEvents() {

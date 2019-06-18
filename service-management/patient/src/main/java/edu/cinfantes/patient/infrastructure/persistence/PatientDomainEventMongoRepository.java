@@ -2,6 +2,7 @@ package edu.cinfantes.patient.infrastructure.persistence;
 
 import edu.cinfantes.patient.domain.DomainEvent;
 import edu.cinfantes.patient.domain.DomainEventRepository;
+import edu.cinfantes.patient.domain.PatientDomainEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ public class PatientDomainEventMongoRepository implements DomainEventRepository 
 
   @Override
   public void saveAll(List<DomainEvent> events) {
+    // TODO: traducir a JSON API
     List<PatientDomainEventDocument> documents = events.stream()
       .map(event ->
         PatientDomainEventDocument.builder()
@@ -42,7 +44,8 @@ public class PatientDomainEventMongoRepository implements DomainEventRepository 
 
   private DomainEvent documentToDomainEvent(PatientDomainEventDocument document) {
     try {
-      DomainEvent event = (DomainEvent) Class.forName(document.getClassName()).getDeclaredConstructor().newInstance();
+      // TODO: mejorar
+      PatientDomainEvent event = (PatientDomainEvent) Class.forName(document.getClassName()).getDeclaredConstructor().newInstance();
       event.setId(UUID.fromString(document.getId()));
       event.setAggregateId(document.getAggregateId());
       event.setWhen(document.getWhen());
