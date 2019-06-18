@@ -11,6 +11,6 @@
 
     <modules>
         <module>patient</module>
-        <module>address</module>
+        <module>patient-address</module>
     </modules>
 </project>

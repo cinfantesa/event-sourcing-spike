@@ -1,8 +1,8 @@
-package edu.cinfantes.patient.application;
+package edu.cinfantes.patientaddress.application;
 
 
-import edu.cinfantes.patient.domain.PatientAddress;
-import edu.cinfantes.patient.domain.PatientId;
+import edu.cinfantes.patientaddress.domain.PatientAddressId;
+import edu.cinfantes.patientaddress.domain.PatientId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +17,9 @@ public class CreatePatientAddressTest {
 
   @Test
   public void should_load_aggregate() {
-    PatientId patientId = new PatientId("d21d63dd-8c67-4e89-acb6-9c86cc2d994e");
-    PatientAddress address = new PatientAddress("Calle Alonso Cano 64","Alicante");
+    PatientAddressId id = new PatientAddressId();
+    PatientId patientId = new PatientId("e5fb019a-0b90-4c25-ac39-6a77d48ab937");
 
-    createPatientAddress.invoke(patientId, address);
+    createPatientAddress.invoke(id, patientId, "Calle Alonso Cano 64", "Alicante");
   }
 }

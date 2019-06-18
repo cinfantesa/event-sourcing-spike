@@ -1,8 +1,8 @@
-package edu.cinfantes.patient.infrastructure.persistence;
+package edu.cinfantes.patientaddress.infrastructure.persistence;
 
-import edu.cinfantes.patient.domain.DomainEvent;
-import edu.cinfantes.patient.domain.DomainEventRepository;
-import edu.cinfantes.patient.domain.PatientDomainEvent;
+import edu.cinfantes.patientaddress.domain.DomainEvent;
+import edu.cinfantes.patientaddress.domain.DomainEventRepository;
+import edu.cinfantes.patientaddress.domain.PatientAddressDomainEvent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,15 +15,15 @@ import static java.util.UUID.fromString;
 
 @Component
 @AllArgsConstructor
-public class PatientDomainEventMongoRepository implements DomainEventRepository {
-  private final SpringPatientDomainEventMongoRepository springPatientDomainEventMongoRepository;
+public class PatientAddressDomainEventMongoRepository implements DomainEventRepository {
+  private final SpringPatientAddressDomainEventMongoRepository springPatientAddressDomainEventMongoRepository;
 
   @Override
   public void saveAll(List<DomainEvent> events) {
     // TODO: traducir a JSON API
-    List<PatientDomainEventDocument> documents = events.stream()
+    List<PatientAddressDomainEventDocument> documents = events.stream()
       .map(event ->
-        PatientDomainEventDocument.builder()
+        PatientAddressDomainEventDocument.builder()
           .id(event.getId().toString())
           .aggregateId(event.getAggregateId())
           .className(event.getClass().getCanonicalName())
@@ -34,18 +34,18 @@ public class PatientDomainEventMongoRepository implements DomainEventRepository 
       )
       .collect(Collectors.toList());
 
-    springPatientDomainEventMongoRepository.saveAll(documents);
+    springPatientAddressDomainEventMongoRepository.saveAll(documents);
   }
 
   @Override
   public Stream<DomainEvent> findAllByAggregateIdAsc(String aggregateId) {
-    return springPatientDomainEventMongoRepository.findAllByAggregateIdOrderByWhenAsc(aggregateId)
+    return springPatientAddressDomainEventMongoRepository.findAllByAggregateIdOrderByWhenAsc(aggregateId)
       .map(this::documentToDomainEvent);
   }
 
-  private DomainEvent documentToDomainEvent(PatientDomainEventDocument document) {
+  private DomainEvent documentToDomainEvent(PatientAddressDomainEventDocument document) {
     try {
-      PatientDomainEvent event = (PatientDomainEvent) Class.forName(document.getClassName()).getDeclaredConstructor().newInstance();
+      PatientAddressDomainEvent event = (PatientAddressDomainEvent) Class.forName(document.getClassName()).getDeclaredConstructor().newInstance();
       event.setId(fromString(document.getId()));
       event.setAggregateId(document.getAggregateId());
       event.setWhen(document.getWhen());

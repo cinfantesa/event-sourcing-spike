@@ -13,8 +13,7 @@ public final class Patient {
   private PatientSip sip;
   private PatientPersonalInfo personalInfo;
   private PatientComment comment;
-  private List<PatientAddress> addresses;
-
+  private int numberOfAddresses;
   private List<DomainEvent> events;
 
   public Patient(PatientId id, PatientSip sip, PatientPersonalInfo personalInfo, PatientComment comment) {
@@ -22,7 +21,6 @@ public final class Patient {
     this.sip = sip;
     this.personalInfo = personalInfo;
     this.comment = comment;
-    addresses = new ArrayList<>();
     events = new ArrayList<>();
 
     events.add(new PatientCreatedDomainEvent(id.getValue().toString(), PatientCreatedPayload.builder()
@@ -36,21 +34,13 @@ public final class Patient {
   }
 
   public Patient(Stream<DomainEvent> eventStream) {
-    addresses = new ArrayList<>();
     events = new ArrayList<>();
 
     eventStream.forEach((event) -> {
       if (event instanceof PatientCreatedDomainEvent) {
         apply((PatientCreatedDomainEvent) event);
-      } else if (event instanceof  PatientAddressAddedDomainEvent) {
-        apply((PatientAddressAddedDomainEvent) event);
       }
     });
-  }
-
-  private void apply(PatientAddressAddedDomainEvent event) {
-    PatientAddress patientAddress = new PatientAddress(event.getData().getAddress(), event.getData().getLocality());
-    addresses.add(patientAddress);
   }
 
   private void apply(PatientCreatedDomainEvent event) {
@@ -70,14 +60,5 @@ public final class Patient {
     events.clear();
 
     return allDomainEvents;
-  }
-
-  public void addAddress(PatientAddress patientAddress) {
-    addresses.add(patientAddress);
-
-    events.add(new PatientAddressAddedDomainEvent(id.getValue().toString(), PatientAddressAddedPayload.builder()
-      .address(patientAddress.getAddress())
-      .locality(patientAddress.getLocality())
-      .build()));
   }
 }

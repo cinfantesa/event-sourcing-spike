@@ -1,11 +1,11 @@
-package edu.cinfantes.patient.domain;
+package edu.cinfantes.patientaddress.domain;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class PatientAddressAddedDomainEvent extends PatientDomainEvent<PatientAddressAddedPayload> {
+public class PatientAddressAddedDomainEvent extends PatientAddressDomainEvent<PatientAddressAddedPayload> {
 
   public PatientAddressAddedDomainEvent(String aggregateId, PatientAddressAddedPayload data) {
     super(aggregateId, data);
@@ -19,4 +19,5 @@ public class PatientAddressAddedDomainEvent extends PatientDomainEvent<PatientAd
 class PatientAddressAddedPayload {
   private String address;
   private String locality;
+  private PatientId patientId;
 }
