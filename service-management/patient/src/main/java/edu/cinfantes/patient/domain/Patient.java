@@ -13,7 +13,7 @@ public final class Patient {
   private PatientSip sip;
   private PatientPersonalInfo personalInfo;
   private PatientComment comment;
-  private int numberOfAddresses;
+  private int numberOfAddresses = 0;
   private List<DomainEvent> events;
 
   public Patient(PatientId id, PatientSip sip, PatientPersonalInfo personalInfo, PatientComment comment) {
@@ -60,5 +60,9 @@ public final class Patient {
     events.clear();
 
     return allDomainEvents;
+  }
+
+  public void addNewPatientAddress() {
+    numberOfAddresses++;
   }
 }
