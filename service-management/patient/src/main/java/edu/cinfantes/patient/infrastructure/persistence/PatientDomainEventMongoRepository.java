@@ -25,6 +25,7 @@ public class PatientDomainEventMongoRepository implements DomainEventRepository 
         PatientDomainEventDocument.builder()
           .id(event.getId().toString())
           .aggregateId(event.getAggregateId())
+          .className(event.getClass().getCanonicalName())
           .when(event.getWhen())
           .data(event.getData())
           .build()

@@ -1,6 +1,7 @@
 package edu.cinfantes.patient.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.joda.time.DateTime;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
 import static java.util.UUID.randomUUID;
 import static org.joda.time.DateTime.now;
 
-
+@NoArgsConstructor
 public abstract class PatientDomainEvent implements DomainEvent {
   @Getter @Setter
   private UUID id;

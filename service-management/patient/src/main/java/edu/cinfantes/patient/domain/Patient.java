@@ -1,6 +1,7 @@
 package edu.cinfantes.patient.domain;
 
 import lombok.Getter;
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +42,28 @@ public final class Patient {
 
     eventStream.forEach((event) -> {
       if (event instanceof PatientCreatedDomainEvent) {
-
+        apply((PatientCreatedDomainEvent) event);
+      } else if (event instanceof  PatientAddressAddedDomainEvent) {
+        apply((PatientAddressAddedDomainEvent) event);
       }
     });
   }
 
+  private void apply(PatientAddressAddedDomainEvent event) {
+    PatientAddress patientAddress = new PatientAddress(String.valueOf(event.getData().get("address")), String.valueOf(event.getData().get("locality")));
+    addresses.add(patientAddress);
+  }
+
   private void apply(PatientCreatedDomainEvent event) {
     id = new PatientId(event.getAggregateId());
-    sip = new PatientSip((Integer) event.getData().get("sip"));
+    sip = (PatientSip) event.getData().get("sip");
+    personalInfo = PatientPersonalInfo.builder()
+      .birthDate(new DateTime(event.getData().get("birthDate")))
+      .name(String.valueOf(event.getData().get("name")))
+      .firstSurname(String.valueOf(event.getData().get("firstSurname")))
+      .secondSurname(String.valueOf(event.getData().get("secondSurname")))
+      .build();
+    comment = new PatientComment((String) event.getData().get("comment"));
   }
 
   public List<DomainEvent> pullDomainEvents() {
@@ -56,5 +71,14 @@ public final class Patient {
     events.clear();
 
     return allDomainEvents;
+  }
+
+  public void addAddress(PatientAddress patientAddress) {
+    addresses.add(patientAddress);
+
+    events.add(new PatientAddressAddedDomainEvent(id.value().toString(), Map.of(
+      "address", patientAddress.getAddress(),
+      "locality", patientAddress.getLocality()
+    )));
   }
 }
