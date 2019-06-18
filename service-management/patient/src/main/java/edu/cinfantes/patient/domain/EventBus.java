@@ -1,9 +1,10 @@
 package edu.cinfantes.patient.domain;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public interface EventBus {
-  void publish(List<DomainEvent> domainEvents);
+  void appendToEventStream(List<DomainEvent> domainEvents);
 
-  void loadDomainEventsStream(String value);
+  Stream<DomainEvent> loadEventStream(String value);
 }

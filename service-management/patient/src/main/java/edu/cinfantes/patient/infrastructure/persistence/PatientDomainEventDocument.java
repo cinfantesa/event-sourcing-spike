@@ -11,11 +11,12 @@ import java.util.Map;
 @Data
 @Builder
 @Document(collection = "PatientEvents")
-public class DomainEventDocument {
+public class PatientDomainEventDocument {
   @Id
   private String id;
   private DateTime when;
   private String aggregateId;
+  private String className;
 
   private Map<String, Object> data;
 }

@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Getter
 public final class Patient {
@@ -34,6 +35,18 @@ public final class Patient {
     );
   }
 
+  public Patient(Stream<DomainEvent> eventStream) {
+    eventStream.forEach((event) -> {
+      if (event instanceof PatientCreatedDomainEvent) {
+
+      }
+    });
+  }
+
+  private void apply(PatientCreatedDomainEvent event) {
+    id = new PatientId(event.getAggregateId());
+
+  }
 
   public List<DomainEvent> pullDomainEvents() {
     List<DomainEvent> allDomainEvents = List.copyOf(events);

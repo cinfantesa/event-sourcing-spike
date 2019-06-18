@@ -21,6 +21,6 @@ public final class CreatePatient {
     Patient patient = new Patient(id, sip, personalInfo, comment);
 
     List<DomainEvent> domainEvents = patient.pullDomainEvents();
-    eventBus.publish(domainEvents);
+    eventBus.appendToEventStream(domainEvents);
   }
 }
