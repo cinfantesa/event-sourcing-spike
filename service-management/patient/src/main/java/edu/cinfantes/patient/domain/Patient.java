@@ -5,7 +5,6 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 @Getter
@@ -26,14 +25,14 @@ public final class Patient {
     addresses = new ArrayList<>();
     events = new ArrayList<>();
 
-    events.add(new PatientCreatedDomainEvent(id.toString(), Map.of(
-      "sip", sip,
-      "name", personalInfo.getName(),
-      "firstSurname", personalInfo.getFirstSurname(),
-      "secondSurname", personalInfo.getSecondSurname(),
-      "birthDate", personalInfo.getBirthDate(),
-      "comment", comment.value()))
-    );
+    events.add(new PatientCreatedDomainEvent(id.getValue().toString(), PatientCreatedPayload.builder()
+      .sip(sip)
+      .name(personalInfo.getName())
+      .firstSurname(personalInfo.getFirstSurname())
+      .secondSurname(personalInfo.getSecondSurname())
+      .birthDate(personalInfo.getBirthDate())
+      .comment(comment.getValue())
+      .build()));
   }
 
   public Patient(Stream<DomainEvent> eventStream) {
@@ -50,20 +49,20 @@ public final class Patient {
   }
 
   private void apply(PatientAddressAddedDomainEvent event) {
-    PatientAddress patientAddress = new PatientAddress(String.valueOf(event.getData().get("address")), String.valueOf(event.getData().get("locality")));
+    PatientAddress patientAddress = new PatientAddress(event.getData().getAddress(), event.getData().getLocality());
     addresses.add(patientAddress);
   }
 
   private void apply(PatientCreatedDomainEvent event) {
     id = new PatientId(event.getAggregateId());
-    sip = (PatientSip) event.getData().get("sip");
+    sip = PatientSip.copyOf(event.getData().getSip());
     personalInfo = PatientPersonalInfo.builder()
-      .birthDate(new DateTime(event.getData().get("birthDate")))
-      .name(String.valueOf(event.getData().get("name")))
-      .firstSurname(String.valueOf(event.getData().get("firstSurname")))
-      .secondSurname(String.valueOf(event.getData().get("secondSurname")))
+      .birthDate(new DateTime(event.getData().getBirthDate()))
+      .name(event.getData().getName())
+      .firstSurname(event.getData().getFirstSurname())
+      .secondSurname(event.getData().getSecondSurname())
       .build();
-    comment = new PatientComment((String) event.getData().get("comment"));
+    comment = new PatientComment(event.getData().getComment());
   }
 
   public List<DomainEvent> pullDomainEvents() {
@@ -76,9 +75,9 @@ public final class Patient {
   public void addAddress(PatientAddress patientAddress) {
     addresses.add(patientAddress);
 
-    events.add(new PatientAddressAddedDomainEvent(id.value().toString(), Map.of(
-      "address", patientAddress.getAddress(),
-      "locality", patientAddress.getLocality()
-    )));
+    events.add(new PatientAddressAddedDomainEvent(id.getValue().toString(), PatientAddressAddedPayload.builder()
+      .address(patientAddress.getAddress())
+      .locality(patientAddress.getLocality())
+      .build()));
   }
 }

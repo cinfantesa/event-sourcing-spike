@@ -17,7 +17,7 @@ public final class CreatePatientAddress {
   private final EventBus eventBus;
 
   public void invoke(PatientId patientId, PatientAddress patientAddress) {
-    Stream<DomainEvent> domainEventStream = eventBus.loadEventStream(patientId.value().toString());
+    Stream<DomainEvent> domainEventStream = eventBus.loadEventStream(patientId.getValue().toString());
 
     Patient patient = new Patient(domainEventStream);
     patient.addAddress(patientAddress);

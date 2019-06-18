@@ -1,19 +1,22 @@
 package edu.cinfantes.patient.domain;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
-
 @NoArgsConstructor
-public class PatientAddressAddedDomainEvent extends PatientDomainEvent {
-  private static final String TYPE = "cinfantes.patient.1.event.patient.address.added";
+public class PatientAddressAddedDomainEvent extends PatientDomainEvent<PatientAddressAddedPayload> {
 
-  public PatientAddressAddedDomainEvent(String aggregateId, Map<String, Object> data) {
-    super(aggregateId, TYPE, data);
-  }
+  public PatientAddressAddedDomainEvent(String aggregateId, PatientAddressAddedPayload data) {
+    super(aggregateId, data);
 
-  @Override
-  public String getType() {
-    return TYPE;
+    type = "cinfantes.patient.1.event.patient.address.added";
   }
+}
+
+@Data
+@Builder
+class PatientAddressAddedPayload {
+  private String address;
+  private String locality;
 }

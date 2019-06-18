@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.UUID.fromString;
 
 @Component
 @AllArgsConstructor
@@ -26,6 +27,7 @@ public class PatientDomainEventMongoRepository implements DomainEventRepository 
           .id(event.getId().toString())
           .aggregateId(event.getAggregateId())
           .className(event.getClass().getCanonicalName())
+          .type(event.getType())
           .when(event.getWhen())
           .data(event.getData())
           .build()
@@ -47,7 +49,7 @@ public class PatientDomainEventMongoRepository implements DomainEventRepository 
     try {
       // TODO: mejorar
       PatientDomainEvent event = (PatientDomainEvent) Class.forName(document.getClassName()).getDeclaredConstructor().newInstance();
-      event.setId(UUID.fromString(document.getId()));
+      event.setId(fromString(document.getId()));
       event.setAggregateId(document.getAggregateId());
       event.setWhen(document.getWhen());
       event.setData(document.getData());

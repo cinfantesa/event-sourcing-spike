@@ -6,13 +6,17 @@ import lombok.Getter;
 public final class PatientSip {
   private static final double MAX_LENGTH = 8d;
 
-  private Integer sip;
+  private Integer value;
 
-  public PatientSip(Integer sip) {
-    ensureSipIsPositive(sip);
-    ensureSipMaxLength(sip);
+  public PatientSip(Integer value) {
+    ensureSipIsPositive(value);
+    ensureSipMaxLength(value);
 
-    this.sip = sip;
+    this.value = value;
+  }
+
+  public static PatientSip copyOf(PatientSip patientSip) {
+    return new PatientSip(patientSip.getValue());
   }
 
   private void ensureSipIsPositive(Integer sip) {

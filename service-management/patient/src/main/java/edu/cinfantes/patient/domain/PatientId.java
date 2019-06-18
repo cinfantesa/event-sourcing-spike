@@ -1,5 +1,7 @@
 package edu.cinfantes.patient.domain;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
 import static java.util.Objects.requireNonNull;
@@ -7,18 +9,15 @@ import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
 
 public final class PatientId {
-  private UUID id;
+  @Getter
+  private UUID value;
 
   public PatientId() {
-    id = randomUUID();
+    value = randomUUID();
   }
 
   public PatientId(String uuid) {
     requireNonNull(uuid);
-    id = fromString(uuid);
-  }
-
-  public UUID value() {
-    return id;
+    value = fromString(uuid);
   }
 }

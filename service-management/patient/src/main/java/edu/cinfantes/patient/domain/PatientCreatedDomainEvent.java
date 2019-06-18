@@ -1,19 +1,27 @@
 package edu.cinfantes.patient.domain;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Map;
+import org.joda.time.DateTime;
 
 @NoArgsConstructor
-public class PatientCreatedDomainEvent extends PatientDomainEvent {
-  private static final String TYPE = "cinfantes.patient.1.event.patient.created";
+public class PatientCreatedDomainEvent extends PatientDomainEvent<PatientCreatedPayload> {
 
-  public PatientCreatedDomainEvent(String aggregateId, Map<String, Object> data) {
-    super(aggregateId, TYPE, data);
-  }
+  public PatientCreatedDomainEvent(String aggregateId, PatientCreatedPayload data) {
+    super(aggregateId, data);
 
-  @Override
-  public String getType() {
-    return TYPE;
+    type = "cinfantes.patient.1.event.patient.created";
   }
+}
+
+@Data
+@Builder
+class PatientCreatedPayload {
+  private PatientSip sip;
+  private String name;
+  private String firstSurname;
+  private String secondSurname;
+  private DateTime birthDate;
+  private String comment;
 }
