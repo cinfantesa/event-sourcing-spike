@@ -5,7 +5,7 @@ import edu.cinfantes.patient.domain.DomainEventRepository;
 import edu.cinfantes.patient.domain.EventBus;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.messaging.Processor;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +14,15 @@ import java.util.stream.Stream;
 
 @Component
 @AllArgsConstructor
-@EnableBinding(Processor.class)
+@EnableBinding(Source.class)
 public class RabbitmqEventBus implements EventBus {
   private final DomainEventRepository repository;
-  private final Processor processor;
+  private final Source source;
 
   @Override
   public void appendToEventStream(List<DomainEvent> domainEvents) {
     repository.saveAll(domainEvents);
-    domainEvents.forEach(event -> processor.output().send(MessageBuilder.withPayload(event).build()));
+    domainEvents.forEach(event -> source.output().send(MessageBuilder.withPayload(event).build()));
   }
 
   @Override
