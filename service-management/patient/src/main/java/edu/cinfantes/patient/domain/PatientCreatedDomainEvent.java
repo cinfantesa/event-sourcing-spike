@@ -6,19 +6,18 @@ import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
 @NoArgsConstructor
-public class PatientCreatedDomainEvent extends PatientDomainEvent<PatientCreatedPayload> {
+public final class PatientCreatedDomainEvent extends DomainEvent<PatientCreatedAttributes> {
 
-  public PatientCreatedDomainEvent(String aggregateId, PatientCreatedPayload data) {
-    super(aggregateId, data);
-
-    type = "cinfantes.patient.1.event.patient.created";
+  public PatientCreatedDomainEvent(PatientCreatedAttributes data) {
+    super(data, "cinfantes.patient.1.event.patient.created");
   }
 }
 
 @Data
 @Builder
-class PatientCreatedPayload {
-  private PatientSip sip;
+class PatientCreatedAttributes implements Identificable{
+  private String id;
+  private Integer sip;
   private String name;
   private String firstSurname;
   private String secondSurname;

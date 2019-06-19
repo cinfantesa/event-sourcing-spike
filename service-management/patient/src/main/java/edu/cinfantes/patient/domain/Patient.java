@@ -23,8 +23,9 @@ public final class Patient {
     this.comment = comment;
     events = new ArrayList<>();
 
-    events.add(new PatientCreatedDomainEvent(id.getValue().toString(), PatientCreatedPayload.builder()
-      .sip(sip)
+    events.add(new PatientCreatedDomainEvent(PatientCreatedAttributes.builder()
+      .id(id.getValue())
+      .sip(sip.getValue())
       .name(personalInfo.getName())
       .firstSurname(personalInfo.getFirstSurname())
       .secondSurname(personalInfo.getSecondSurname())
@@ -40,25 +41,25 @@ public final class Patient {
       if (event instanceof PatientCreatedDomainEvent) {
         apply((PatientCreatedDomainEvent) event);
       } else if (event instanceof PatientAddressCounterUpdatedDomainEvent) {
-        apply((PatientAddressCounterUpdatedDomainEvent) event);
+        apply();
       }
     });
   }
 
-  private void apply(PatientAddressCounterUpdatedDomainEvent event) {
-    numberOfAddresses ++;
+  private void apply() {
+    numberOfAddresses++;
   }
 
   private void apply(PatientCreatedDomainEvent event) {
-    id = new PatientId(event.getAggregateId());
-    sip = PatientSip.copyOf(event.getData().getSip());
+    id = new PatientId(event.getAttributes().getId());
+    sip = new PatientSip(event.getAttributes().getSip());
     personalInfo = PatientPersonalInfo.builder()
-      .birthDate(new DateTime(event.getData().getBirthDate()))
-      .name(event.getData().getName())
-      .firstSurname(event.getData().getFirstSurname())
-      .secondSurname(event.getData().getSecondSurname())
+      .birthDate(new DateTime(event.getAttributes().getBirthDate()))
+      .name(event.getAttributes().getName())
+      .firstSurname(event.getAttributes().getFirstSurname())
+      .secondSurname(event.getAttributes().getSecondSurname())
       .build();
-    comment = new PatientComment(event.getData().getComment());
+    comment = new PatientComment(event.getAttributes().getComment());
   }
 
   public List<DomainEvent> pullDomainEvents() {
@@ -71,6 +72,6 @@ public final class Patient {
   public void addNewPatientAddress() {
     numberOfAddresses++;
 
-    events.add(new PatientAddressCounterUpdatedDomainEvent(getId().getValue().toString()));
+    events.add(new PatientAddressCounterUpdatedDomainEvent());
   }
 }
