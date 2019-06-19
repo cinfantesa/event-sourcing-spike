@@ -1,12 +1,14 @@
 package edu.cinfantes.patient.domain;
 
+import edu.cinfantes.patient.domain.event.DomainEvent;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public final class PatientCreatedDomainEvent extends DomainEvent<PatientCreatedAttributes> {
+  public static final String TYPE = "cinfantes.patient.1.event.patient.created";
 
   public PatientCreatedDomainEvent(PatientCreatedAttributes data) {
-    super(data, "cinfantes.patient.1.event.patient.created");
+    super(data, TYPE);
   }
 }
 

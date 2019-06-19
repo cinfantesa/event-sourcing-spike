@@ -15,7 +15,7 @@ public class UpdateNumberOfAddressesTest {
 
   @Test
   public void should_update_address_counter() {
-    PatientId patientId = new PatientId("6cc46b68-98a1-4f23-abb0-642d6d55e39b");
+    PatientId patientId = new PatientId("9340cffd-5a61-4acd-ab4b-4ca654a767b6");
 
     updateNumberOfAddresses.invoke(patientId);
   }

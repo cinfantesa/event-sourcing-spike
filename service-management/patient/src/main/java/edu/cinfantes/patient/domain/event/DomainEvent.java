@@ -1,5 +1,6 @@
-package edu.cinfantes.patient.domain;
+package edu.cinfantes.patient.domain.event;
 
+import edu.cinfantes.patient.domain.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import static org.joda.time.DateTime.now;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DomainEvent<T extends Identificable> {
+public class DomainEvent<T extends Identifiable> {
   protected DomainEventData<T> data;
 
   public DomainEvent(T attributes, String type) {

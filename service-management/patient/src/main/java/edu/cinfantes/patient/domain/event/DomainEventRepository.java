@@ -1,4 +1,4 @@
-package edu.cinfantes.patient.domain;
+package edu.cinfantes.patient.domain.event;
 
 import java.util.List;
 import java.util.stream.Stream;

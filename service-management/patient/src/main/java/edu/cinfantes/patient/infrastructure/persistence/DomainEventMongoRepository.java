@@ -1,8 +1,8 @@
 package edu.cinfantes.patient.infrastructure.persistence;
 
-import edu.cinfantes.patient.domain.DomainEvent;
-import edu.cinfantes.patient.domain.DomainEventRepository;
-import edu.cinfantes.patient.domain.DomainEventData;
+import edu.cinfantes.patient.domain.event.DomainEvent;
+import edu.cinfantes.patient.domain.event.DomainEventRepository;
+import edu.cinfantes.patient.domain.event.DomainEventData;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class DomainEventMongoRepository implements DomainEventRepository {
 
   @Override
   public void saveAll(List<DomainEvent> events) {
-    List<DomainEventDocument> documents = events.stream()
+    List<PatientDomainEventDocument> documents = events.stream()
       .map(this::domainEventToDocument)
       .collect(Collectors.toList());
 
@@ -31,7 +31,7 @@ public class DomainEventMongoRepository implements DomainEventRepository {
       .map(this::documentToDomainEvent);
   }
 
-  private DomainEvent documentToDomainEvent(DomainEventDocument document) {
+  private DomainEvent documentToDomainEvent(PatientDomainEventDocument document) {
     DomainEventData domainEventData = DomainEventData.builder()
       .id(document.getData().getId())
       .type(document.getData().getType())
@@ -46,8 +46,8 @@ public class DomainEventMongoRepository implements DomainEventRepository {
     return domainEvent;
   }
 
-  private DomainEventDocument domainEventToDocument(DomainEvent event) {
-    return new DomainEventDocument(DomainEventDataDocument.builder()
+  private PatientDomainEventDocument domainEventToDocument(DomainEvent event) {
+    return new PatientDomainEventDocument(PatientDomainEventDataDocument.builder()
       .id(event.getId())
       .type(event.getType())
       .occurredOn(event.getOccurredOn())

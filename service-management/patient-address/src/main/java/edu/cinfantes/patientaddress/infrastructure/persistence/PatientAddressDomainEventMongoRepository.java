@@ -1,17 +1,15 @@
 package edu.cinfantes.patientaddress.infrastructure.persistence;
 
 import edu.cinfantes.patientaddress.domain.DomainEvent;
+import edu.cinfantes.patientaddress.domain.DomainEventData;
 import edu.cinfantes.patientaddress.domain.DomainEventRepository;
-import edu.cinfantes.patientaddress.domain.PatientAddressDomainEvent;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.UUID.fromString;
 
 @Component
 @AllArgsConstructor
@@ -20,18 +18,8 @@ public class PatientAddressDomainEventMongoRepository implements DomainEventRepo
 
   @Override
   public void saveAll(List<DomainEvent> events) {
-    // TODO: traducir a JSON API
     List<PatientAddressDomainEventDocument> documents = events.stream()
-      .map(event ->
-        PatientAddressDomainEventDocument.builder()
-          .id(event.getId().toString())
-          .aggregateId(event.getAggregateId())
-          .className(event.getClass().getCanonicalName())
-          .type(event.getType())
-          .when(event.getWhen())
-          .data(event.getData())
-          .build()
-      )
+      .map(this::domainEventToDocument)
       .collect(Collectors.toList());
 
     springPatientAddressDomainEventMongoRepository.saveAll(documents);
@@ -39,21 +27,31 @@ public class PatientAddressDomainEventMongoRepository implements DomainEventRepo
 
   @Override
   public Stream<DomainEvent> findAllByAggregateIdAsc(String aggregateId) {
-    return springPatientAddressDomainEventMongoRepository.findAllByAggregateIdOrderByWhenAsc(aggregateId)
+    return springPatientAddressDomainEventMongoRepository.findAllByAggregateId(aggregateId, Sort.by(Sort.Direction.ASC, "data.attributes.occurredOn"))
       .map(this::documentToDomainEvent);
   }
 
   private DomainEvent documentToDomainEvent(PatientAddressDomainEventDocument document) {
-    try {
-      PatientAddressDomainEvent event = (PatientAddressDomainEvent) Class.forName(document.getClassName()).getDeclaredConstructor().newInstance();
-      event.setId(fromString(document.getId()));
-      event.setAggregateId(document.getAggregateId());
-      event.setWhen(document.getWhen());
-      event.setData(document.getData());
-      return event;
-    } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException e) {
-      e.printStackTrace();
-      return null;
-    }
+    DomainEventData domainEventData = DomainEventData.builder()
+      .id(document.getData().getId())
+      .type(document.getData().getType())
+      .occurredOn(document.getData().getOccurredOn())
+      .attributes(document.getData().getAttributes())
+      .build();
+
+    DomainEvent domainEvent = DomainEvent.builder()
+      .data(domainEventData)
+      .build();
+
+    return domainEvent;
+  }
+
+  private PatientAddressDomainEventDocument domainEventToDocument(DomainEvent event) {
+    return new PatientAddressDomainEventDocument(PatientAddressDomainEventDataDocument.builder()
+      .id(event.getId())
+      .type(event.getType())
+      .occurredOn(event.getOccurredOn())
+      .attributes(event.getAttributes())
+      .build());
   }
 }

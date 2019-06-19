@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 
 @Data
 @Builder
-public final class PatientCreatedAttributes implements Identificable{
+public final class PatientCreatedAttributes implements Identifiable {
   private String id;
   private Integer sip;
   private String name;

@@ -1,6 +1,6 @@
 package edu.cinfantes.patient.infrastructure.persistence;
 
-import edu.cinfantes.patient.domain.Identificable;
+import edu.cinfantes.patient.domain.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,15 +12,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @AllArgsConstructor
 @Document(collection = "PatientEvents")
-public class DomainEventDocument {
-  private DomainEventDataDocument data;
+public class PatientDomainEventDocument {
+  private PatientDomainEventDataDocument data;
 }
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-class DomainEventDataDocument implements Identificable {
+class PatientDomainEventDataDocument implements Identifiable {
   String id;
   String type;
   DateTime occurredOn;

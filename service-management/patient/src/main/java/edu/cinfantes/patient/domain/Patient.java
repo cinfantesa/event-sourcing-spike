@@ -1,10 +1,12 @@
 package edu.cinfantes.patient.domain;
 
+import edu.cinfantes.patient.domain.event.DomainEvent;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 @Getter
@@ -38,9 +40,9 @@ public final class Patient {
     events = new ArrayList<>();
 
     eventStream.forEach((event) -> {
-      if (event instanceof PatientCreatedDomainEvent) {
-        apply((PatientCreatedDomainEvent) event);
-      } else if (event instanceof PatientAddressCounterUpdatedDomainEvent) {
+      if (Objects.equals(event.getType(), PatientCreatedDomainEvent.TYPE)) {
+        apply(event);
+      } else if (Objects.equals(event.getType(), PatientAddressCounterUpdatedDomainEvent.TYPE)) {
         apply();
       }
     });
@@ -50,7 +52,7 @@ public final class Patient {
     numberOfAddresses++;
   }
 
-  private void apply(PatientCreatedDomainEvent event) {
+  private void apply(DomainEvent<PatientCreatedAttributes> event) {
     id = new PatientId(event.getAttributes().getId());
     sip = new PatientSip(event.getAttributes().getSip());
     personalInfo = PatientPersonalInfo.builder()
@@ -72,6 +74,8 @@ public final class Patient {
   public void addNewPatientAddress() {
     numberOfAddresses++;
 
-    events.add(new PatientAddressCounterUpdatedDomainEvent());
+    events.add(new PatientAddressCounterUpdatedDomainEvent(PatientAddressCounterUpdatedAttributes.builder()
+      .id(id.getValue())
+      .build()));
   }
 }

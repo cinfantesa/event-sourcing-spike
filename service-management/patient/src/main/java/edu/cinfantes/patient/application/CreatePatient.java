@@ -1,7 +1,7 @@
 package edu.cinfantes.patient.application;
 
-import edu.cinfantes.patient.domain.DomainEvent;
-import edu.cinfantes.patient.domain.EventBus;
+import edu.cinfantes.patient.domain.event.DomainEvent;
+import edu.cinfantes.patient.domain.event.EventBus;
 import edu.cinfantes.patient.domain.Patient;
 import edu.cinfantes.patient.domain.PatientComment;
 import edu.cinfantes.patient.domain.PatientId;

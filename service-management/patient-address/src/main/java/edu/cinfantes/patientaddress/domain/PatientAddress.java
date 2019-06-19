@@ -28,7 +28,8 @@ public class PatientAddress {
     this.locality = locality;
     this.patientId = patientId;
 
-    events.add(new PatientAddressAddedDomainEvent(id.getValue().toString(), PatientAddressAddedPayload.builder()
+    events.add(new PatientAddressAddedDomainEvent(PatientAddressAddedAttributes.builder()
+      .id(id.getValue())
       .address(address)
       .locality(locality)
       .patientId(patientId)
