@@ -1,5 +1,7 @@
 package edu.cinfantes.patient.domain;
 
+import edu.cinfantes.patient.domain.exception.SipMaxLengthException;
+import edu.cinfantes.patient.domain.exception.SipNotPositiveException;
 import lombok.Getter;
 
 @Getter

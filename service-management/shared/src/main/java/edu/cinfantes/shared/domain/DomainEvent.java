@@ -1,6 +1,5 @@
-package edu.cinfantes.patient.domain.event;
+package edu.cinfantes.shared.domain;
 
-import edu.cinfantes.patient.domain.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
 import static java.util.UUID.randomUUID;
-import static org.joda.time.DateTime.now;
 
 @Getter
 @Builder
@@ -21,7 +19,7 @@ public class DomainEvent<T extends Identifiable> {
     this.data = new DomainEventData<>();
     this.data.id = randomUUID().toString();
     this.data.type = type;
-    this.data.occurredOn = now();
+    this.data.occurredOn = DateTime.now();
     this.data.attributes = attributes;
   }
 

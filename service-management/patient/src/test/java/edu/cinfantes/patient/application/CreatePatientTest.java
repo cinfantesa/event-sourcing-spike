@@ -1,9 +1,9 @@
 package edu.cinfantes.patient.application;
 
 import edu.cinfantes.patient.domain.PatientComment;
-import edu.cinfantes.patient.domain.PatientId;
 import edu.cinfantes.patient.domain.PatientPersonalInfo;
 import edu.cinfantes.patient.domain.PatientSip;
+import edu.cinfantes.shared.domain.patient.PatientId;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;

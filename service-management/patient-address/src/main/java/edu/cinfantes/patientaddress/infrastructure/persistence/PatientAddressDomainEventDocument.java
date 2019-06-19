@@ -1,6 +1,6 @@
 package edu.cinfantes.patientaddress.infrastructure.persistence;
 
-import edu.cinfantes.patientaddress.domain.Identifiable;
+import edu.cinfantes.shared.domain.Identifiable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

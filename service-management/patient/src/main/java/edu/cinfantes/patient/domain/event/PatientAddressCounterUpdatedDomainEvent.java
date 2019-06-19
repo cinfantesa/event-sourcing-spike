@@ -1,6 +1,7 @@
 package edu.cinfantes.patient.domain;
 
-import edu.cinfantes.patient.domain.event.DomainEvent;
+import edu.cinfantes.shared.domain.DomainEvent;
+import edu.cinfantes.shared.domain.Identifiable;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +15,6 @@ public final class PatientAddressCounterUpdatedDomainEvent extends DomainEvent<P
 
 @Data
 @Builder
-class PatientAddressCounterUpdatedAttributes implements Identifiable{
+class PatientAddressCounterUpdatedAttributes implements Identifiable {
   private String id;
 }

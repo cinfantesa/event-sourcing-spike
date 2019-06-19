@@ -1,4 +1,4 @@
-package edu.cinfantes.patientaddress.domain;
+package edu.cinfantes.shared.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

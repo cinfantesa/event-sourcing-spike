@@ -2,7 +2,7 @@ package edu.cinfantes.patientaddress.application;
 
 
 import edu.cinfantes.patientaddress.domain.PatientAddressId;
-import edu.cinfantes.patientaddress.domain.PatientId;
+import edu.cinfantes.shared.domain.patient.PatientId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

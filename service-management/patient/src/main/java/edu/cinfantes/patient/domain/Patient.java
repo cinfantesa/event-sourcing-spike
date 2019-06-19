@@ -1,6 +1,11 @@
 package edu.cinfantes.patient.domain;
 
-import edu.cinfantes.patient.domain.event.DomainEvent;
+import edu.cinfantes.patient.domain.event.PatientAddressCounterUpdatedAttributes;
+import edu.cinfantes.patient.domain.event.PatientAddressCounterUpdatedDomainEvent;
+import edu.cinfantes.patient.domain.event.PatientCreatedAttributes;
+import edu.cinfantes.patient.domain.event.PatientCreatedDomainEvent;
+import edu.cinfantes.shared.domain.DomainEvent;
+import edu.cinfantes.shared.domain.patient.PatientId;
 import lombok.Getter;
 import org.joda.time.DateTime;
 

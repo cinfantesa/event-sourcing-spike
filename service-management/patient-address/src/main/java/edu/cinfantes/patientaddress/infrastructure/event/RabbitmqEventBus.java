@@ -1,8 +1,8 @@
 package edu.cinfantes.patientaddress.infrastructure.event;
 
-import edu.cinfantes.patientaddress.domain.DomainEvent;
-import edu.cinfantes.patientaddress.domain.DomainEventRepository;
-import edu.cinfantes.patientaddress.domain.EventBus;
+import edu.cinfantes.shared.domain.DomainEvent;
+import edu.cinfantes.shared.domain.DomainEventRepository;
+import edu.cinfantes.shared.domain.EventBus;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;

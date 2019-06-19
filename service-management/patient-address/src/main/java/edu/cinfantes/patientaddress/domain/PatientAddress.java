@@ -1,5 +1,9 @@
 package edu.cinfantes.patientaddress.domain;
 
+import edu.cinfantes.patientaddress.domain.event.PatientAddressAddedAttributes;
+import edu.cinfantes.patientaddress.domain.event.PatientAddressAddedDomainEvent;
+import edu.cinfantes.shared.domain.DomainEvent;
+import edu.cinfantes.shared.domain.patient.PatientId;
 import lombok.Getter;
 
 import java.util.ArrayList;

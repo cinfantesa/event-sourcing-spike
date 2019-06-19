@@ -1,10 +1,10 @@
 package edu.cinfantes.patientaddress.application;
 
-import edu.cinfantes.patientaddress.domain.DomainEvent;
-import edu.cinfantes.patientaddress.domain.EventBus;
 import edu.cinfantes.patientaddress.domain.PatientAddress;
 import edu.cinfantes.patientaddress.domain.PatientAddressId;
-import edu.cinfantes.patientaddress.domain.PatientId;
+import edu.cinfantes.shared.domain.DomainEvent;
+import edu.cinfantes.shared.domain.EventBus;
+import edu.cinfantes.shared.domain.patient.PatientId;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

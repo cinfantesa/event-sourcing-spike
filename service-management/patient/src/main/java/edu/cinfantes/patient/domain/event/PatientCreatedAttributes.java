@@ -1,5 +1,6 @@
 package edu.cinfantes.patient.domain;
 
+import edu.cinfantes.shared.domain.Identifiable;
 import lombok.Builder;
 import lombok.Data;
 import org.joda.time.DateTime;

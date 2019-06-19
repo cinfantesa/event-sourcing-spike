@@ -2,8 +2,8 @@ package edu.cinfantes.patient.infrastructure.port;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.cinfantes.patient.application.UpdateNumberOfAddresses;
-import edu.cinfantes.patient.domain.PatientId;
 import edu.cinfantes.patient.infrastructure.event.PatientAddressAddedProcessor;
+import edu.cinfantes.shared.domain.patient.PatientId;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;

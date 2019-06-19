@@ -1,8 +1,8 @@
 package edu.cinfantes.patient.infrastructure.persistence;
 
-import edu.cinfantes.patient.domain.event.DomainEvent;
-import edu.cinfantes.patient.domain.event.DomainEventRepository;
-import edu.cinfantes.patient.domain.event.DomainEventData;
+import edu.cinfantes.shared.domain.DomainEvent;
+import edu.cinfantes.shared.domain.DomainEventData;
+import edu.cinfantes.shared.domain.DomainEventRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;

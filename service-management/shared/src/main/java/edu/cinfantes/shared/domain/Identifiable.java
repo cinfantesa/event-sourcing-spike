@@ -1,4 +1,4 @@
-package edu.cinfantes.patient.domain;
+package edu.cinfantes.shared.domain;
 
 public interface Identifiable {
   String getId();

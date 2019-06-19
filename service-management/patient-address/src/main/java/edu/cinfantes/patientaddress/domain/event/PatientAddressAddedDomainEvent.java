@@ -1,5 +1,6 @@
 package edu.cinfantes.patientaddress.domain;
 
+import edu.cinfantes.shared.domain.DomainEvent;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
