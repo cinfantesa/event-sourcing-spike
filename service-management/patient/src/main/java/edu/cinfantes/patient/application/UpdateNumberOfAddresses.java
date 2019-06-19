@@ -7,6 +7,7 @@ import edu.cinfantes.patient.domain.PatientId;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 @Component
@@ -19,5 +20,8 @@ public class UpdateNumberOfAddresses {
 
     Patient patient = new Patient(domainEventStream);
     patient.addNewPatientAddress();
+
+    List<DomainEvent> domainEvents = patient.pullDomainEvents();
+    eventBus.appendToEventStream(domainEvents);
   }
 }

@@ -5,6 +5,24 @@ spring:
       host: localhost
       port: 27017
 
-  jackson:
-    serialization:
-      write_dates_as_timestamps: true
+  cloud:
+    stream:
+      bindings:
+        onPatientAddressAdded:
+          destination: patient_address
+          group: update.number.services
+          binder: rabbit
+        output:
+          destination: patient
+          binder: rabbit
+      rabbit:
+        bindings:
+          onPatientAddressAdded:
+            consumer:
+              bindingRoutingKey: cinfantes.patient.1.event.patient.address.added
+          output:
+            producer:
+              routingKeyExpression: payload.type
+      binders:
+        rabbit:
+          type: rabbit

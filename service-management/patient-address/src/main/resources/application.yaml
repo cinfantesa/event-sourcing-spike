@@ -5,6 +5,17 @@ spring:
       host: localhost
       port: 27017
 
-  jackson:
-    serialization:
-      write_dates_as_timestamps: true
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: patient_address
+          binder: rabbit
+      rabbit:
+        bindings:
+          output:
+            producer:
+              routingKeyExpression: payload.type
+      binders:
+        rabbit:
+          type: rabbit

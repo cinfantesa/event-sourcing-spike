@@ -18,8 +18,7 @@ public class CreatePatientAddressTest {
   @Test
   public void should_load_aggregate() {
     PatientAddressId id = new PatientAddressId();
-    PatientId patientId = new PatientId("e5fb019a-0b90-4c25-ac39-6a77d48ab937");
-
+    PatientId patientId = new PatientId("f183a960-5b0b-4cd5-b555-62bb2931602b");
     createPatientAddress.invoke(id, patientId, "Calle Alonso Cano 64", "Alicante");
   }
 }

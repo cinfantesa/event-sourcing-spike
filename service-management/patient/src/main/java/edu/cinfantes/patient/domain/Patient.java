@@ -39,8 +39,14 @@ public final class Patient {
     eventStream.forEach((event) -> {
       if (event instanceof PatientCreatedDomainEvent) {
         apply((PatientCreatedDomainEvent) event);
+      } else if (event instanceof PatientAddressCounterUpdatedDomainEvent) {
+        apply((PatientAddressCounterUpdatedDomainEvent) event);
       }
     });
+  }
+
+  private void apply(PatientAddressCounterUpdatedDomainEvent event) {
+    numberOfAddresses ++;
   }
 
   private void apply(PatientCreatedDomainEvent event) {
@@ -64,5 +70,7 @@ public final class Patient {
 
   public void addNewPatientAddress() {
     numberOfAddresses++;
+
+    events.add(new PatientAddressCounterUpdatedDomainEvent(getId().getValue().toString()));
   }
 }

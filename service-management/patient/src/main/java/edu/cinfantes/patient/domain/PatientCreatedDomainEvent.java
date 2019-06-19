@@ -24,4 +24,5 @@ class PatientCreatedPayload {
   private String secondSurname;
   private DateTime birthDate;
   private String comment;
+  private String numberOfAddresses;
 }
