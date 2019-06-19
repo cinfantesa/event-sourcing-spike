@@ -47,7 +47,6 @@ public final class Patient {
       }
     });
   }
-  
 
   private void apply() {
     numberOfAddresses++;
