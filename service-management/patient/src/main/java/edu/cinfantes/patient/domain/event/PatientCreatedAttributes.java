@@ -1,4 +1,4 @@
-package edu.cinfantes.patient.domain;
+package edu.cinfantes.patient.domain.event;
 
 import edu.cinfantes.shared.domain.Identifiable;
 import lombok.Builder;
