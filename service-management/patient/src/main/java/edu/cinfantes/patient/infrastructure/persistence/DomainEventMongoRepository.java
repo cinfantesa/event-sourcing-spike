@@ -2,7 +2,9 @@ package edu.cinfantes.patient.infrastructure.persistence;
 
 import edu.cinfantes.patient.domain.DomainEvent;
 import edu.cinfantes.patient.domain.DomainEventRepository;
+import edu.cinfantes.patient.domain.DomainEventData;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +19,7 @@ public class DomainEventMongoRepository implements DomainEventRepository {
   @Override
   public void saveAll(List<DomainEvent> events) {
     List<DomainEventDocument> documents = events.stream()
-      .map(event -> new DomainEventDocument(event.getData()))
+      .map(this::domainEventToDocument)
       .collect(Collectors.toList());
 
     springDomainEventMongoRepository.saveAll(documents);
@@ -25,7 +27,31 @@ public class DomainEventMongoRepository implements DomainEventRepository {
 
   @Override
   public Stream<DomainEvent> findAllByAggregateIdAsc(String aggregateId) {
-    return springDomainEventMongoRepository.findAllByDataIdOrderByOccurredOnAsc(aggregateId)
-      .map(document -> new DomainEvent(document.getData()));
+    return springDomainEventMongoRepository.findAllByAggregateId(aggregateId, Sort.by(Sort.Direction.ASC, "data.attributes.occurredOn"))
+      .map(this::documentToDomainEvent);
+  }
+
+  private DomainEvent documentToDomainEvent(DomainEventDocument document) {
+    DomainEventData domainEventData = DomainEventData.builder()
+      .id(document.getData().getId())
+      .type(document.getData().getType())
+      .occurredOn(document.getData().getOccurredOn())
+      .attributes(document.getData().getAttributes())
+      .build();
+
+    DomainEvent domainEvent = DomainEvent.builder()
+      .data(domainEventData)
+      .build();
+
+    return domainEvent;
+  }
+
+  private DomainEventDocument domainEventToDocument(DomainEvent event) {
+    return new DomainEventDocument(DomainEventDataDocument.builder()
+      .id(event.getId())
+      .type(event.getType())
+      .occurredOn(event.getOccurredOn())
+      .attributes(event.getAttributes())
+      .build());
   }
 }

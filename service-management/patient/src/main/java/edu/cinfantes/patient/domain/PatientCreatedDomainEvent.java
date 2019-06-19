@@ -1,9 +1,6 @@
 package edu.cinfantes.patient.domain;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.joda.time.DateTime;
 
 @NoArgsConstructor
 public final class PatientCreatedDomainEvent extends DomainEvent<PatientCreatedAttributes> {
@@ -13,15 +10,3 @@ public final class PatientCreatedDomainEvent extends DomainEvent<PatientCreatedA
   }
 }
 
-@Data
-@Builder
-class PatientCreatedAttributes implements Identificable{
-  private String id;
-  private Integer sip;
-  private String name;
-  private String firstSurname;
-  private String secondSurname;
-  private DateTime birthDate;
-  private String comment;
-  private String numberOfAddresses;
-}

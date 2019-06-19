@@ -16,7 +16,7 @@ public class UpdateNumberOfAddresses {
   private EventBus eventBus;
 
   public void invoke(PatientId id) {
-    Stream<DomainEvent> domainEventStream = eventBus.loadEventStream(id.getValue().toString());
+    Stream<DomainEvent> domainEventStream = eventBus.loadEventStream(id.getValue());
 
     Patient patient = new Patient(domainEventStream);
     patient.addNewPatientAddress();
