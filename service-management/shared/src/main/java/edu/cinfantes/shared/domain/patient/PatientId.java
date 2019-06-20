@@ -1,13 +1,13 @@
 package edu.cinfantes.shared.domain.patient;
 
-import lombok.Getter;
+import lombok.Data;
 
 import static java.util.Objects.requireNonNull;
 import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
 
+@Data
 public final class PatientId {
-  @Getter
   private String value;
 
   public PatientId() {

@@ -13,8 +13,3 @@ public final class PatientAddressCounterUpdatedDomainEvent extends DomainEvent<P
   }
 }
 
-@Data
-@Builder
-class PatientAddressCounterUpdatedAttributes implements Identifiable {
-  private String id;
-}
