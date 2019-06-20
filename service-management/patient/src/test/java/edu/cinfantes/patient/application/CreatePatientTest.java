@@ -21,8 +21,8 @@ public class CreatePatientTest {
   public void should_create_patient() {
     PatientId patientId = new PatientId();
     PatientSip patientSip = new PatientSip(1234567);
-    PatientPersonalInfo patientPersonalInfo = new PatientPersonalInfo("Cristobal", "Infantes", "Alvarez", DateTime.now().withDate(1980, 11, 11));
-    PatientComment patientComment = new PatientComment("Comentario");
+    PatientPersonalInfo patientPersonalInfo = new PatientPersonalInfo("Cristobal 2", "Infantes 2", "Alvarez 2", DateTime.now().withDate(1980, 11, 11));
+    PatientComment patientComment = new PatientComment("Comentario 2");
 
     createPatient.invoke(patientId, patientSip, patientPersonalInfo, patientComment);
   }

@@ -17,7 +17,7 @@ public class PatientAddressAddedListener {
 
   @StreamListener(PatientAddressAddedProcessor.ON_CLIENT_ADDRESS_ADDED)
   public void processOrder(PatientAddressAddedDomainEvent event) {
-    PatientId patientId = new PatientId(event.getData().getAttributes().getPatientId().toString());
+    PatientId patientId = new PatientId(event.getData().getAttributes().getPatientId().getValue());
     updateNumberOfAddresses.invoke(patientId);
   }
 

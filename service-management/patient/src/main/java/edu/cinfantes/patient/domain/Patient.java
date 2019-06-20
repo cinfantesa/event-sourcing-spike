@@ -46,18 +46,18 @@ public final class Patient {
 
     eventStream.forEach((event) -> {
       if (Objects.equals(event.getType(), PatientCreatedDomainEvent.TYPE)) {
-        apply(event);
+        applyPatientCreated(event);
       } else if (Objects.equals(event.getType(), PatientAddressCounterUpdatedDomainEvent.TYPE)) {
-        apply();
+        applyPatientAddressAdded(event);
       }
     });
   }
 
-  private void apply() {
-    numberOfAddresses++;
+  private void applyPatientAddressAdded(DomainEvent<PatientAddressCounterUpdatedAttributes> event) {
+      numberOfAddresses++;
   }
 
-  private void apply(DomainEvent<PatientCreatedAttributes> event) {
+  private void applyPatientCreated(DomainEvent<PatientCreatedAttributes> event) {
     id = new PatientId(event.getAttributes().getId());
     sip = new PatientSip(event.getAttributes().getSip());
     personalInfo = PatientPersonalInfo.builder()

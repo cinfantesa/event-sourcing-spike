@@ -9,7 +9,7 @@ spring:
     stream:
       bindings:
         output:
-          destination: patient_address
+          destination: patient.address
           binder: rabbit
       rabbit:
         bindings:
