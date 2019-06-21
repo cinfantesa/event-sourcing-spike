@@ -26,7 +26,7 @@ public class PatientAddress extends AggregateRoot {
     this.locality = locality;
     this.patientId = patientId;
 
-    addDaomainEvent(new PatientAddressAddedDomainEvent(PatientAddressAddedAttributes.builder()
+    addDomainEvent(new PatientAddressAddedDomainEvent(PatientAddressAddedAttributes.builder()
       .id(id.getValue())
       .address(address)
       .locality(locality)
