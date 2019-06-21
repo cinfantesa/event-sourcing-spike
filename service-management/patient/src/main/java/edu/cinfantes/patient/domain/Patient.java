@@ -4,10 +4,13 @@ import edu.cinfantes.patient.domain.event.PatientAddressCounterUpdatedAttributes
 import edu.cinfantes.patient.domain.event.PatientAddressCounterUpdatedDomainEvent;
 import edu.cinfantes.patient.domain.event.PatientCreatedAttributes;
 import edu.cinfantes.patient.domain.event.PatientCreatedDomainEvent;
+import edu.cinfantes.patient.domain.event.PatientExitedAttributes;
+import edu.cinfantes.patient.domain.event.PatientExitedDomainEvent;
 import edu.cinfantes.shared.domain.DomainEvent;
 import edu.cinfantes.shared.domain.patient.AggregateRoot;
 import edu.cinfantes.shared.domain.patient.PatientId;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 import java.util.stream.Stream;
 
@@ -18,6 +21,7 @@ public final class Patient extends AggregateRoot {
   private PatientPersonalInfo personalInfo;
   private PatientComment comment;
   private int numberOfAddresses = 0;
+  private DateTime leavingDate;
 
   public Patient(PatientId id, PatientSip sip, PatientPersonalInfo personalInfo, PatientComment comment) {
     this.id = id;
@@ -46,5 +50,13 @@ public final class Patient extends AggregateRoot {
     addDomainEvent(new PatientAddressCounterUpdatedDomainEvent(PatientAddressCounterUpdatedAttributes.builder()
       .id(id.getValue())
       .build()));
+  }
+
+  public void patientExitus() {
+    leavingDate = DateTime.now();
+
+    addDomainEvent(new PatientExitedDomainEvent(PatientExitedAttributes.builder()
+            .id(id.getValue())
+            .build()));
   }
 }

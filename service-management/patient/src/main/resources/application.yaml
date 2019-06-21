@@ -23,7 +23,7 @@ spring:
         bindings:
           onPatientAddressAdded:
             consumer:
-              bindingRoutingKey: cinfantes.patient.2.event.patient.address.added
+              bindingRoutingKey: cinfantes.patient.1.event.patient.address.added
           output:
             producer:
               routingKeyExpression: payload.type

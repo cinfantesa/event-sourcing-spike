@@ -1,0 +1,29 @@
+spring:
+  data:
+    mongodb:
+      database: service
+      host: localhost
+      port: 27017
+
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: service
+          binder: rabbit
+        onPatientExited:
+          destination: patient
+          group: cancell.related.services.to.exited.patient
+          binder: rabbit
+      rabbit:
+        bindings:
+          output:
+            producer:
+              routingKeyExpression: payload.type
+          onPatientExited:
+            consumer:
+              bindingRoutingKey: cinfantes.patient.1.event.patient.exited
+
+      binders:
+        rabbit:
+          type: rabbit

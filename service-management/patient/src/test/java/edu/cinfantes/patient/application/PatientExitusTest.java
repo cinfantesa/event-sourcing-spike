@@ -9,14 +9,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class UpdateNumberOfAddressesTest {
+public class PatientExitusTest {
   @Autowired
-  private UpdateNumberOfAddresses updateNumberOfAddresses;
+  private PatientExitus patientExitus;
 
   @Test
-  public void should_update_address_counter() {
-    PatientId patientId = new PatientId("9c300ef0-c792-4b4c-94eb-326dc71ed842");
+  public void should_update_leaving_date_and_emit_cancel_related_services() {
+    PatientId patientId = new PatientId("a0784f62-e849-4883-8200-a8e3da750ce3");
 
-    updateNumberOfAddresses.invoke(patientId);
+    patientExitus.invoke(patientId);
   }
 }
