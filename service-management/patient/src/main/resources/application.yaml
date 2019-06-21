@@ -16,6 +16,10 @@ spring:
           destination: patient.address
           group: update.number.services
           binder: rabbit
+        onServiceAdded:
+          destination: service
+          group: added
+          binder: rabbit
         output:
           destination: patient
           binder: rabbit
@@ -24,6 +28,9 @@ spring:
           onPatientAddressAdded:
             consumer:
               bindingRoutingKey: cinfantes.patient.1.event.patient.address.added
+          onServiceAdded:
+            consumer:
+              bindingRoutingKey: cinfantes.service.1.event.service.added
           output:
             producer:
               routingKeyExpression: payload.type

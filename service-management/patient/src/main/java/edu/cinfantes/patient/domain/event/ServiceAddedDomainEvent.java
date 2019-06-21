@@ -1,4 +1,4 @@
-package edu.cinfantes.service.domain.event;
+package edu.cinfantes.patient.domain.event;
 
 import edu.cinfantes.shared.domain.DomainEvent;
 import lombok.NoArgsConstructor;

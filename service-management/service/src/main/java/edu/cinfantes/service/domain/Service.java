@@ -4,6 +4,7 @@ import edu.cinfantes.service.domain.event.ServiceAddedAttributes;
 import edu.cinfantes.service.domain.event.ServiceAddedDomainEvent;
 import edu.cinfantes.shared.domain.patient.AggregateRoot;
 import edu.cinfantes.shared.domain.patient.PatientId;
+import edu.cinfantes.shared.domain.service.ServiceId;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
@@ -14,10 +15,10 @@ public class Service extends AggregateRoot {
   private ServiceId id;
   private PatientId patientId;
 
-  private ServiceState state;
+  private String state;
   private DateTime date;
 
-  public Service(ServiceId id, PatientId patientId, ServiceState state, DateTime date) {
+  public Service(ServiceId id, PatientId patientId, String state, DateTime date) {
     requireNonNull(state);
     requireNonNull(date);
 

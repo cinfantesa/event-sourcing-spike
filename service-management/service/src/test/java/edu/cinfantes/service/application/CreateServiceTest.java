@@ -1,9 +1,8 @@
 package edu.cinfantes.service.application;
 
 
-import edu.cinfantes.service.domain.ServiceId;
-import edu.cinfantes.service.domain.ServiceState;
 import edu.cinfantes.shared.domain.patient.PatientId;
+import edu.cinfantes.shared.domain.service.ServiceId;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +21,6 @@ public class CreateServiceTest {
     ServiceId id = new ServiceId();
     PatientId patientId = new PatientId("a0784f62-e849-4883-8200-a8e3da750ce3");
 
-      createService.invoke(id, patientId, ServiceState.ACTIVE, DateTime.now());
+      createService.invoke(id, patientId, "ACTIVE", DateTime.now());
   }
 }

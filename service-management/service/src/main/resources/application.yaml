@@ -13,7 +13,7 @@ spring:
           binder: rabbit
         onPatientExited:
           destination: patient
-          group: cancell.related.services.to.exited.patient
+          group: exited
           binder: rabbit
       rabbit:
         bindings:

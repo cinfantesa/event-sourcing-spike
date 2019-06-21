@@ -1,4 +1,4 @@
-package edu.cinfantes.service.domain;
+package edu.cinfantes.shared.domain.service;
 
 import lombok.Getter;
 
