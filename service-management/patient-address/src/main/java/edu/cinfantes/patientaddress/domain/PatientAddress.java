@@ -2,48 +2,35 @@ package edu.cinfantes.patientaddress.domain;
 
 import edu.cinfantes.patientaddress.domain.event.PatientAddressAddedAttributes;
 import edu.cinfantes.patientaddress.domain.event.PatientAddressAddedDomainEvent;
-import edu.cinfantes.shared.domain.DomainEvent;
+import edu.cinfantes.shared.domain.patient.AggregateRoot;
 import edu.cinfantes.shared.domain.patient.PatientId;
 import lombok.Getter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
 @Getter
-public class PatientAddress {
+public class PatientAddress extends AggregateRoot {
   private PatientAddressId id;
   private PatientId patientId;
 
   private String address;
   private String locality;
 
-  private List<DomainEvent> events;
-
   public PatientAddress(PatientAddressId id, PatientId patientId, String address, String locality) {
     requireNonNull(address);
     requireNonNull(locality);
 
-    events = new ArrayList<>();
 
     this.id = id;
     this.address = address;
     this.locality = locality;
     this.patientId = patientId;
 
-    events.add(new PatientAddressAddedDomainEvent(PatientAddressAddedAttributes.builder()
+    addDaomainEvent(new PatientAddressAddedDomainEvent(PatientAddressAddedAttributes.builder()
       .id(id.getValue())
       .address(address)
       .locality(locality)
       .patientId(patientId)
       .build()));
-  }
-
-  public List<DomainEvent> pullDomainEvents() {
-    List<DomainEvent> allDomainEvents = List.copyOf(events);
-    events.clear();
-
-    return allDomainEvents;
   }
 }

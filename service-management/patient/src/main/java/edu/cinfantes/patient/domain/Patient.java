@@ -1,5 +1,6 @@
 package edu.cinfantes.patient.domain;
 
+import edu.cinfantes.shared.domain.patient.AggregateRoot;
 import edu.cinfantes.patient.domain.event.PatientAddressCounterUpdatedAttributes;
 import edu.cinfantes.patient.domain.event.PatientAddressCounterUpdatedDomainEvent;
 import edu.cinfantes.patient.domain.event.PatientCreatedAttributes;
@@ -9,28 +10,24 @@ import edu.cinfantes.shared.domain.patient.PatientId;
 import lombok.Getter;
 import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 @Getter
-public final class Patient {
+public final class Patient extends AggregateRoot {
   private PatientId id;
   private PatientSip sip;
   private PatientPersonalInfo personalInfo;
   private PatientComment comment;
   private int numberOfAddresses = 0;
-  private List<DomainEvent> events;
 
   public Patient(PatientId id, PatientSip sip, PatientPersonalInfo personalInfo, PatientComment comment) {
     this.id = id;
     this.sip = sip;
     this.personalInfo = personalInfo;
     this.comment = comment;
-    events = new ArrayList<>();
 
-    events.add(new PatientCreatedDomainEvent(PatientCreatedAttributes.builder()
+    addDaomainEvent(new PatientCreatedDomainEvent(PatientCreatedAttributes.builder()
       .id(id.getValue())
       .sip(sip.getValue())
       .name(personalInfo.getName())
@@ -42,8 +39,6 @@ public final class Patient {
   }
 
   public Patient(Stream<DomainEvent> eventStream) {
-    events = new ArrayList<>();
-
     eventStream.forEach((event) -> {
       if (Objects.equals(event.getType(), PatientCreatedDomainEvent.TYPE)) {
         applyPatientCreated(event);
@@ -69,17 +64,10 @@ public final class Patient {
     comment = new PatientComment(event.getAttributes().getComment());
   }
 
-  public List<DomainEvent> pullDomainEvents() {
-    List<DomainEvent> allDomainEvents = List.copyOf(events);
-    events.clear();
-
-    return allDomainEvents;
-  }
-
   public void addNewPatientAddress() {
     numberOfAddresses++;
 
-    events.add(new PatientAddressCounterUpdatedDomainEvent(PatientAddressCounterUpdatedAttributes.builder()
+    addDaomainEvent(new PatientAddressCounterUpdatedDomainEvent(PatientAddressCounterUpdatedAttributes.builder()
       .id(id.getValue())
       .build()));
   }
